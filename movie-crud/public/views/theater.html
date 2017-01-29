@@ -1,0 +1,40 @@
+<div class="jumbotron text-center">
+    <h3>Add Theater Details</h3>
+
+    <p>{{ tagline }}</p>
+    <div>
+
+    <table cellpadding="10" cellspacing="5" width="100%">
+		  		<thead style="border-bottom: 1px solid #ccc;">
+		  		<tr>
+		  			<td><strong>Theater Name</strong></td>
+		  			<td><strong>City</strong></td>
+		  			<td><strong>No of Seat</strong></td>
+		  			<td><strong>Actions</strong></td>
+		  		</tr>
+		  		</thead>
+		  		<tbody>
+		  		<tr>
+		  			<td><input ng-model="theaterName" /></td>
+		  			<td><input ng-model="city" /></td>
+		  			<td><input ng-model="seats" /></td>
+		  			<td>
+		  				<button ng-click="addTheater(theater)" class="btn btn-primary btn-sm">Add</button>
+		  				<button ng-click="updateTheater(theater)" class="btn btn-primary btn-sm">Update</button>
+		  			</td>
+		  		</tr>
+		  		<tr ng-repeat="th in theaterList" style="border-top:1px solid #ccc">
+		  			<td>{{th.theaterName}}</td>
+		  			<td>{{th.city}}</td>
+		  			<td>{{th.seats}}</td>
+		  			<td>
+		  				<button ng-click="editTheater(theater)" class="btn btn-primary btn-sm">Edit</button>
+		  				<button ng-click="deleteTheater(theater)" class="btn btn-primary btn-sm">Delete</button>
+		  			</td>
+		  		</tr>
+		  		</tbody>
+
+		  </table>	
+
+    </div>
+</div>

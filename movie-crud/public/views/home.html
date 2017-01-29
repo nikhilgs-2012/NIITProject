@@ -1,0 +1,17 @@
+<div class="jumbotron text-center">
+	<h3>Movie Booking Website</h3>
+
+	<p>{{ tagline }}</p>
+
+	<div class="row">
+    	  <div ng-repeat="movi in moviList" class="col-md-3">
+
+    	   	<div style="width: 100%;padding: 5px; border: 1px solid #ccc; min-height: 280px; margin: 5px; ">
+    		<p><img src='{{movi.moviPoster}}' width="100px" height="100px"></p>
+    		<p><strong>{{movi.moviTitle}}</strong></p> 
+    		<p>{{movi.moviActors}}</p>
+    		<p>{{movi.moviLanguage}}</p>
+    		</div>
+         </div>
+    </div>
+</div>

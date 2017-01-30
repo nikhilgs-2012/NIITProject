@@ -15,21 +15,21 @@
 		  		</thead>
 		  		<tbody>
 		  		<tr>
-		  			<td><input ng-model="theaterName" /></td>
-		  			<td><input ng-model="city" /></td>
-		  			<td><input ng-model="seats" /></td>
+		  			<td><input ng-model="theater.theaterName" /></td>
+		  			<td><input ng-model="theater.city" /></td>
+		  			<td><input ng-model="theater.seats" /></td>
 		  			<td>
 		  				<button ng-click="addTheater(theater)" class="btn btn-primary btn-sm">Add</button>
 		  				<button ng-click="updateTheater(theater)" class="btn btn-primary btn-sm">Update</button>
 		  			</td>
 		  		</tr>
-		  		<tr ng-repeat="th in theaterList" style="border-top:1px solid #ccc">
-		  			<td>{{th.theaterName}}</td>
-		  			<td>{{th.city}}</td>
-		  			<td>{{th.seats}}</td>
+		  		<tr ng-repeat="theater in theaterList" style="border-top:1px solid #ccc">
+		  			<td>{{theater.theaterName}}</td>
+		  			<td>{{theater.city}}</td>
+		  			<td>{{theater.seats}}</td>
 		  			<td>
 		  				<button ng-click="editTheater(theater)" class="btn btn-primary btn-sm">Edit</button>
-		  				<button ng-click="deleteTheater(theater)" class="btn btn-primary btn-sm">Delete</button>
+		  				<button ng-click="removeTheater(theater)" class="btn btn-primary btn-sm">Delete</button>
 		  			</td>
 		  		</tr>
 		  		</tbody>

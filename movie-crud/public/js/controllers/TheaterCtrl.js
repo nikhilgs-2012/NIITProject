@@ -6,7 +6,7 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
         $http.get('/theater/getTheater').success(function(response) {
             console.log('READ THEATERS IS SUCCESSFUL');
             $scope.theaterList = response;
-           // $scope.theater = "";
+           $scope.theater = "";
         });
     };
    
@@ -14,10 +14,10 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
 
     $scope.addTheater = function(theater) {
              //console.log(response);
-            var theaterObj = {
-            	theaterName:$scope.theaterName,
-            	city:$scope.city,
-            	seats:$scope.seats
+            var theaterdb = {
+            	theaterName:this.theaterName,
+            	city:this.city,
+            	seats:this.seats
             };
            
             $http.defaults.headers.post["Content-Type"] = "application/json";
@@ -26,14 +26,14 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
                     method: 'POST',
                     url: '/theater/addTheater',
                     headers: {'Content-Type': 'application/json'},    
-                    data: theaterObj
+                    data: theaterdb
                 })
                 .then(function(response) {
                     console.log(response);
                     console.log("CREATE IS SUCCESSFUL");
                     refresh();
                 });
-
+                refresh()    
 
             // var serviceName = 'movi'
             // $http.post('/movie/addMovie', movieObj).success(function(response) {
@@ -48,7 +48,7 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
  
 
     $scope.removeTheater = function(theater) {
-        //console.log(id);
+        
         $http.delete('/theater/deleteTheater/' + theater._id).success(function(response) {
             console.log(response);
             console.log('DELETED SUCCESSFULLY');
@@ -59,11 +59,13 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
     $scope.editTheater = function(theater) {
     	console.log(theater);
         $http.get('/theater/getTheater/' + theater._id).success(function(response) {
+            console.log(response[0]);
             $scope.theater = response[0];
+            console.log("edit success")
         });
     };
 
-    $scope.updateTheater = function() {
+    $scope.updateTheater = function(theater) {
         console.log("REACHED UPDATE");
         console.log($scope.theater._id);
         $http.put('/theater/updateTheater/' + $scope.theater._id, $scope.theater).success(function(response) {

@@ -15,9 +15,9 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
     $scope.addTheater = function(theater) {
              //console.log(response);
             var theaterdb = {
-            	theaterName:this.theaterName,
-            	city:this.city,
-            	seats:this.seats
+            	theaterName:theater.theaterName,
+            	city:theater.city,
+            	seats:theater.seats
             };
            
             $http.defaults.headers.post["Content-Type"] = "application/json";

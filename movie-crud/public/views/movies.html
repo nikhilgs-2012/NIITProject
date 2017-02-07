@@ -17,17 +17,20 @@
                     <tr>
 
 
-                        <td><input ng-model="movi.moviTitle" /></td>
+                        <td ><input ng-model="movi.moviTitle" /></td>
 
-                        <td><button ng-click="addMovie(movi)" class="btn btn-primary">Add </button></td>
+                        
 
-                        <td><button ng-click="updateMovie(movi)" class="btn btn-primary">Update</button></td>
+                        <td><button ng-click="addMovie(movi)" class="btn btn-primary btn-sm"> Add </button> 
+                            <button ng-click="updateMovie(movi)" class="btn btn-primary btn-sm">Update</button></td>
 
                     </tr>
                     <tr ng-repeat=" movi in moviList">
-                        <td>{{movi.moviTitle}}</td>
-                        <td><button ng-click="removeMovie(movi)" class="btn btn-danger">Remove</button></td>
-                        <td><button ng-click="editMovie(movi)" class="btn btn-primary">Edit</button></td>
+                        <td><img ng-src={{movi.moviPoster}} height="50px" width="50px"> {{movi.moviTitle}}</td>
+                        
+                        <td><button ng-click="editMovie(movi)" class="btn btn-primary btn-sm">Edit</button>
+                         <button ng-click="removeMovie(movi)" class="btn btn-danger btn-sm">Delete</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

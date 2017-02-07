@@ -2,4 +2,5 @@ body { padding-top:30px; }
 
 table tr td{ padding: 6px !important}
 
-.jumbotron p {font-size: 14px !important}
+.jumbotron p {font-size: 13px !important}
+.jumbotron p.title {font-size: 16px !important}

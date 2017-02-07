@@ -6,6 +6,7 @@ var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var movies = require('./app/movie-crud');
 var theaters = require('./app/theater-crud');
+var city = require('./app/city-crud');
 
 // configuration ===========================================
 	
@@ -14,6 +15,7 @@ var theaters = require('./app/theater-crud');
 app.use(bodyParser.json({})); // parse application/json 
 app.use('/movie', movies);
 app.use('/theater', theaters);
+app.use('/city', city);
 
 
 
@@ -31,7 +33,7 @@ db.once('open', function() {
 var port = process.env.PORT || 3000; // set our port
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 
-// routes ==================================================
+// routes ================================================+==
 require('./app/routes')(app); // pass our application into our routes
 
 // start app ===============================================

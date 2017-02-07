@@ -25,7 +25,7 @@ angular.module('MoviesCtrl', []).controller('MoviesController', function($scope,
                 }
             }
            
-            $http.defaults.headers.post["Content-Type"] = "application/json";
+            //$http.defaults.headers.post["Content-Type"] = "application/json";
 
             $http({
                     method: 'POST',
@@ -48,7 +48,7 @@ angular.module('MoviesCtrl', []).controller('MoviesController', function($scope,
             // });
 
         });
-        console.log($scope.contact);
+        console.log($scope.moviTitle);
 
     };
 

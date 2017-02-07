@@ -8,9 +8,10 @@ var mongoose = require('mongoose');
 var theaterSchema = mongoose.Schema({
   
   theaterName: String,
-  city: String,
+  ticketPrice: String,
   seats: String,
- 
+  cityName: String
+   
  });
 
 var Theater = mongoose.model('Theater', theaterSchema, 'theater');
@@ -34,20 +35,23 @@ router.get('/getTheater/:id', function (req, res) {
 
 router.post('/addTheater', function(req, res){
  
- 
+  console.log(req.body.cityName);
   var theaterName = req.body.theaterName;
-  var city = req.body.city;
+  var ticketPrice = req.body.ticketPrice;
   var seats = req.body.seats;
+  var cityName = req.body.cityName;
   
   var theater = new Theater({
     
     theaterName: theaterName,
-    city: city,
+    ticketPrice: ticketPrice,
     seats: seats,
-       
+    cityName: cityName
+           
   });
 
   theater.save(function(err, docs){
+    console.log(docs);
     if ( err ) throw err;
     console.log("Theater Saved Successfully");
     res.json(docs);

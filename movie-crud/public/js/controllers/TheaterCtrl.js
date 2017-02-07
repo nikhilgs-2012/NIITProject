@@ -2,6 +2,16 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
 
 	$scope.tagline = 'Theater detals add here!';
 
+    var loadCity = function() {
+        $http.get('/city/getCity').success(function(response) {
+            console.log('READ CITY IS SUCCESSFUL');
+           $scope.cityList = response;
+           $scope.city = "";
+        });
+    };
+   
+   loadCity();
+
 	var refresh = function() {
         $http.get('/theater/getTheater').success(function(response) {
             console.log('READ THEATERS IS SUCCESSFUL');
@@ -16,11 +26,12 @@ angular.module('TheaterCtrl', []).controller('TheaterController', function($scop
              //console.log(response);
             var theaterdb = {
             	theaterName:theater.theaterName,
-            	city:theater.city,
-            	seats:theater.seats
+                ticketPrice:theater.ticketPrice,
+                seats:theater.seats,
+            	cityName:theater.cityName
             };
            
-            $http.defaults.headers.post["Content-Type"] = "application/json";
+            //$http.defaults.headers.post["Content-Type"] = "application/json";
 
             $http({
                     method: 'POST',

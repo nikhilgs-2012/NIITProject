@@ -17,6 +17,11 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			templateUrl: 'views/movies.html',
 			controller: 'MoviesController'	
 		})
+
+		.when('/city', {
+			templateUrl: 'views/city.html',
+			controller: 'CityController'	
+		})
 		.when('/theater', {
 			templateUrl: 'views/theater.html',
 			controller: 'TheaterController'	

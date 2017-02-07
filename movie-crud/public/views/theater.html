@@ -8,16 +8,26 @@
 		  		<thead style="border-bottom: 1px solid #ccc;">
 		  		<tr>
 		  			<td><strong>Theater Name</strong></td>
-		  			<td><strong>City</strong></td>
+		  			<td><strong>Ticket Price</strong></td>
 		  			<td><strong>No of Seat</strong></td>
+		  			<td><strong>City</strong></td>
+		  			
 		  			<td><strong>Actions</strong></td>
 		  		</tr>
 		  		</thead>
 		  		<tbody>
 		  		<tr>
 		  			<td><input ng-model="theater.theaterName" /></td>
-		  			<td><input ng-model="theater.city" /></td>
+		  			<td><input ng-model="theater.ticketPrice" /></td>
 		  			<td><input ng-model="theater.seats" /></td>
+		  			<td><!--input ng-model="theater.city" /-->
+		  				<select ng-model="theater.cityName">
+    							<option ng-repeat="theater in cityList">{{theater.cityName}}</option>
+    		
+						</select>
+
+		  			</td>
+		  			
 		  			<td>
 		  				<button ng-click="addTheater(theater)" class="btn btn-primary btn-sm">Add</button>
 		  				<button ng-click="updateTheater(theater)" class="btn btn-primary btn-sm">Update</button>
@@ -25,8 +35,10 @@
 		  		</tr>
 		  		<tr ng-repeat="theater in theaterList" style="border-top:1px solid #ccc">
 		  			<td>{{theater.theaterName}}</td>
-		  			<td>{{theater.city}}</td>
+		  			<td>{{theater.ticketPrice}}</td>
 		  			<td>{{theater.seats}}</td>
+		  			<td>{{theater.cityName}}</td>
+		  			
 		  			<td>
 		  				<button ng-click="editTheater(theater)" class="btn btn-primary btn-sm">Edit</button>
 		  				<button ng-click="removeTheater(theater)" class="btn btn-primary btn-sm">Delete</button>

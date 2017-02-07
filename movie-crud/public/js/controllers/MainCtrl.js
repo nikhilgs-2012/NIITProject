@@ -3,7 +3,7 @@ angular.module('MainCtrl', []).controller('MainController', function($scope,$htt
 	$scope.tagline = 'Welcome to movie booking website!';
 
 		$http.get('/movie/getMovie').success(function(response) {
-            console.log('READ IS SUCCESSFUL');
+            console.log('MOVIELIST SUCCESSFUL');
             $scope.moviList = response;
             console.log($scope.moviList);
         });

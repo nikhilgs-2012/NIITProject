@@ -7,7 +7,7 @@ var methodOverride = require('method-override');
 var movies = require('./app/movie-crud');
 var theaters = require('./app/theater-crud');
 var city = require('./app/city-crud');
-
+var showtime = require('./app/showtime-crud');
 // configuration ===========================================
 	
 // config files
@@ -16,6 +16,7 @@ app.use(bodyParser.json({})); // parse application/json
 app.use('/movie', movies);
 app.use('/theater', theaters);
 app.use('/city', city);
+app.use('/showTime', showtime);
 
 
 

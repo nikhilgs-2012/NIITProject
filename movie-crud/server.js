@@ -4,25 +4,35 @@ var app            = express();
 var mongoose       = require('mongoose');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+
+
 var movies = require('./app/movie-crud');
 var theaters = require('./app/theater-crud');
 var city = require('./app/city-crud');
 var showtime = require('./app/showtime-crud');
+var assignMovie = require('./app/assign-movie-crud');
+var assignShowTime = require('./app/assign-show-time-crud');
+var bookMovies = require('./app/book-movie-crud');
+var availableTicket= require ('./app/available-movie-ticket-crud');
 // configuration ===========================================
 	
 // config files
 //var db = require('./config/db');
 app.use(bodyParser.json({})); // parse application/json 
-app.use('/movie', movies);
-app.use('/theater', theaters);
+app.use('/movi', movies);
+app.use('/thtr', theaters);
 app.use('/city', city);
-app.use('/showTime', showtime);
+app.use('/stim', showtime);
+app.use('/asmv', assignMovie);
+app.use('/asst', assignShowTime);
+app.use('/avtc', availableTicket);
+app.use('/bktc', bookMovies);
 
 
 
 var mongo = require('mongodb');
-var mongoose = require('mongoose');
-var dbHost = 'mongodb://localhost:27017/test';
+
+var dbHost = 'mongodb://localhost:27017/moviedata';
 mongoose.connect(dbHost);
 
 var db = mongoose.connection;

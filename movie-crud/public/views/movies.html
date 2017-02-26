@@ -1,38 +1,47 @@
-<div class="jumbotron text-center">
-    <h3>Movie Booking</h3>
-
-    <p>{{ tagline }}</p>
-
-    <div>
-        <center>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Movie</th>
-                        <th>Actions</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-
-
-                        <td ><input ng-model="movi.moviTitle" /></td>
-
-                        
-
-                        <td><button ng-click="addMovie(movi)" class="btn btn-primary btn-sm"> Add </button> 
-                            <button ng-click="updateMovie(movi)" class="btn btn-primary btn-sm">Update</button></td>
-
-                    </tr>
-                    <tr ng-repeat=" movi in moviList">
-                        <td><img ng-src={{movi.moviPoster}} height="50px" width="50px"> {{movi.moviTitle}}</td>
-                        
-                        <td><button ng-click="editMovie(movi)" class="btn btn-primary btn-sm">Edit</button>
-                         <button ng-click="removeMovie(movi)" class="btn btn-danger btn-sm">Delete</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </center>
+<div class="jumbotron">
+    <div class="row" style="padding: 10px 0px; margin-bottom: 20px; border-bottom: 1px solid #ccc;">
+      <form class="filter-movies">
+      <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="All">All
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="Comedy">Comedy
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="Horror">Horror
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="Drama">Drama
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="Sci-Fi">Sci-Fi
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="Thriller">Thriller
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="Action">Action
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="optradio" ng-model="genre" ng-click="filterMovies()" value="Family">Family
+        </label>
+      </form>
     </div>
+
+    <!-- movie list -->
+    <div class = "movies-wrapper row">
+      <div class="row">
+        <div class="col-md-3" ng-repeat = "movie in movieList">
+           <div style="width: 100%; height: 300px">
+            <img class="movie-poster" ng-src={{movie.moviPoster}} height="100%" width="100%" />
+           </div>
+           <ul class="list-group">
+
+            <li class="list-group-item"><span class="movie-title" >Title : {{movie.moviTitle}}</span></li>
+            <li class="list-group-item"><span class="movie-title" >Director : {{movie.moviDirector}}</span></li>
+            <li class="list-group-item"><button ng-click = "bookMovie(movie)" class="button-color book btn btn-primary ">Book</button></li>
+            </ul>
+        </div>
+      </div>
+    </div>
+</div>

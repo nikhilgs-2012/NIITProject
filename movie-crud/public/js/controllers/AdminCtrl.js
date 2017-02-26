@@ -1,212 +1,133 @@
-angular.module('adminCtrl', []).controller('AdminController', function($scope, $http) {
+// example with services
 
-    $scope.tagline = 'Add your movies here!';
+movieApp.controller('AdminController', function($scope, $http, $filter, AdminCRUDService) {
 
-    $scope.booking = 'booking';
+    $scope.tagline = 'Book your movies here!';
 
-    var refresh = function() {
-        $http.get('/movie/getMovie').success(function(response) {
-            console.log('READ IS SUCCESSFUL');
-            $scope.moviList = response;
-            $scope.movi = "";
-        });
+    var collections = ['city', 'thtr', 'stim', 'movi', 'asmv', 'asst'];
+
+var dataRefresh = function (collections) {
+        collections.forEach(function(collection){
+                                var promise =  AdminCRUDService.getData(collection);
+                                    promise.then(function(data){
+                                        $scope[`${collection}List`] = data;
+                                        $scope[collection] = "";
+                                    })
+                             });
     };
 
-    refresh();
+dataRefresh(collections);
 
-    $scope.addMovie = function(movi) {
-        $http.get(`http://www.omdbapi.com/?t=${movi.moviTitle}&plot=short&r=json`).success(function(response) {
-            //console.log(response);
-            var movieObj = {};
-            for (var key in response) {
-                if (key == 'Title' || key == 'Language' || key == 'Poster' || key == 'Genre' || key == 'Director' || key == 'Actors') {
-                    movieObj[key] = response[key];
+$scope.addData = function(model){ 
+    var serviceName = (Object.keys(model)[0]).substring(0,4);   
+    var promise =  AdminCRUDService.addData(model, serviceName);
+    promise.then(function(data){
+        dataRefresh([serviceName]);
+    })
 
+}
+
+$scope.deleteData= function(model){
+    var serviceName = (Object.keys(model)[1]).substring(0,4);
+    var promise =  AdminCRUDService.deleteData(model, serviceName);
+    promise.then(function(data){
+      dataRefresh([serviceName]);
+    })
+}
+
+$scope.editData = function(model){
+    var serviceName = (Object.keys(model)[1]).substring(0,4);
+    var promise =  AdminCRUDService.editData(model, serviceName);
+    promise.then(function(data){
+        $scope[serviceName] = data[0];
+    })
+}
+
+$scope.updateData = function(model){
+    var serviceName = (Object.keys(model)[1]).substring(0,4);
+    var promise =  AdminCRUDService.updateData(model, serviceName);
+    promise.then(function(data){
+        dataRefresh([serviceName]);
+    })
+}
+
+ $(document).ready(function() {
+    $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+        e.preventDefault();
+        $(this).siblings('a.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+    });
+});
+
+
+
+// // Show timings
+ $scope.example13model = [];
+        $scope.example13data = [
+            {id: 7, label: "David"},
+            {id: 2, label: "Jhon"},
+            {id: 3, label: "Lisa"},
+            {id: 4, label: "Nicole"},
+            {id: 5, label: "Danny"}];
+        
+        $scope.example13settings = {
+            smartButtonMaxItems: 2,
+            smartButtonTextConverter: function(itemText, originalItem) {
+                if (itemText === 'Jhon') {
+                return 'Jhonny!';
                 }
+        
+                return itemText;
             }
-           
-            //$http.defaults.headers.post["Content-Type"] = "application/json";
+        };
 
-            $http({
-                    method: 'POST',
-                    url: '/movie/addMovie',
-                    headers: {'Content-Type': 'application/json'},    
-                    data: movieObj
-                })
-                .then(function(response) {
-                    console.log(response);
-                    console.log("CREATE IS SUCCESSFUL");
-                    refresh();
-                });
+// movie insert
+$scope.insertMovie=function(movi){
+                $http.get(`http://www.omdbapi.com/?t=${movi.moviTitle}&plot=short&r=json`).success(function (response) {
+                            //console.log(response);
+                            var movieObj={};
+                            for(var key in response){
+                                if(key=='Title' || key== 'Language' || key== 'Poster' || key== 'Genre' || key== 'Director' || key== 'Actors'){
+                                    movieObj[key] = response[key];
+                                     
+                                }
+                            }
+                           
+                           var serviceName = 'movi'  
+                            var promise =  AdminCRUDService.addData(movieObj, serviceName);
+                            promise.then(function(data){
+                                dataRefresh([serviceName]);
+                            })
+                        });
 
+}
 
-            // var serviceName = 'movi'
-            // $http.post('/movie/addMovie', movieObj).success(function(response) {
-            //     console.log(response);
-            //     console.log("CREATE IS SUCCESSFUL");
-            //     refresh();
-            // });
+// load theatres based on city
 
-        });
-        console.log($scope.contact);
+    $scope.loadTheatres = function(){
+       $scope.cityTheatres = [];
+       for(var theatre of $scope.thtrList){
+            if(theatre.city == $scope.asmv.asmvCity){
+                $scope.cityTheatres.push(theatre)
+            }
+       }
 
-    };
-
-    $scope.removeMovie = function(movie) {
-        //console.log(id);
-        $http.delete('/movie/deleteMovie/' + movie._id).success(function(response) {
-            console.log(response);
-            console.log('DELETED SUCCESSFULLY');
-            refresh();
-        });
-    };
-
-    $scope.editMovie = function(movie) {
-        console.log(movie);
-        $http.get('/movie/getMovie/' + movie._id).success(function(response) {
-            $scope.movi = response[0];
-        });
-    };
-
-    $scope.updateMovie = function() {
-        console.log("REACHED UPDATE");
-        console.log($scope.movi._id);
-        $http.put('/movie/updateMovie/' + $scope.movi._id, $scope.movi).success(function(response) {
-            console.log(response);
-            refresh();
-        })
     }
 
+ //constructAssignMovieModel
+    $scope.addAssignMovie = function(model){
+       // var fromDate =  $filter('date')(model.asmvFromDate, 'shortDate');
+       // var toDate = $filter('date')(model.asmvToDate, 'shortDate');
 
-    //  ---- THEATER CRUD FUNCTIONS ----- //
+       var fromDate = moment(model.asmvFromDate).format('l');
+       var toDate = moment(model.asmvToDate).format('l');
 
-
-    var refresh = function() {
-        $http.get('/theater/getTheater').success(function(response) {
-            console.log('READ THEATERS IS SUCCESSFUL');
-            $scope.theaterList = response;
-           $scope.theater = "";
-        });
-    };
-   
-   refresh();
-
-    $scope.addTheater = function(theater) {
-             //console.log(response);
-            var theaterdb = {
-                theaterName:theater.theaterName,
-                city:theater.city,
-                seats:theater.seats
-            };
-           
-            //$http.defaults.headers.post["Content-Type"] = "application/json";
-
-            $http({
-                    method: 'POST',
-                    url: '/theater/addTheater',
-                    headers: {'Content-Type': 'application/json'},    
-                    data: theaterdb
-                })
-                .then(function(response) {
-                    console.log(response);
-                    console.log("CREATE IS SUCCESSFUL");
-                    refresh();
-                });
-                refresh()    
-       
-    };
- 
-
-    $scope.removeTheater = function(theater) {
-        
-        $http.delete('/theater/deleteTheater/' + theater._id).success(function(response) {
-            console.log('DELETED SUCCESSFULLY');
-            refresh();
-        });
-    };
-
-    $scope.editTheater = function(theater) {
-        console.log(theater);
-        $http.get('/theater/getTheater/' + theater._id).success(function(response) {
-            $scope.theater = response[0];
-            console.log("edit success")
-        });
-    };
-
-    $scope.updateTheater = function(theater) {
-        console.log("REACHED UPDATE");
-            $http.put('/theater/updateTheater/' + $scope.theater._id, $scope.theater).success(function(response) {
-            console.log(response);
-            refresh();
-        })
-    }
-
-
-    //  ---- CITY CRUD FUNCTIONS ----- //
-
-    var refresh = function() {
-        $http.get('/city/getCity').success(function(response) {
-            console.log('READ CITY IS SUCCESSFUL');
-            $scope.cityrList = response;
-           $scope.theater = "";
-        });
-    };
-   
-   refresh();
-
-    $scope.addCity = function(city) {
-             //console.log(response);
-            var citydb = {
-                cityName:city.cityName,
-                
-            };
-           
-            //$http.defaults.headers.post["Content-Type"] = "application/json";
-
-            $http({
-                    method: 'POST',
-                    url: '/city/addCity',
-                    headers: {'Content-Type': 'application/json'},    
-                    data: theaterdb
-                })
-                .then(function(response) {
-                    console.log(response);
-                    console.log("CREATE IS SUCCESSFUL");
-                    refresh();
-                });
-                refresh()    
-       
-    };
- 
-
-    $scope.removeTheater = function(city) {
-        
-        $http.delete('/city/deleteCity/' + city._id).success(function(response) {
-            console.log('DELETED SUCCESSFULLY');
-            refresh();
-        });
-    };
-
-    $scope.editTheater = function(city) {
-        
-        $http.get('/city/getCity/' + city._id).success(function(response) {
-            $scope.city = response[0];
-            console.log("edit success")
-        });
-    };
-
-    $scope.updateTheater = function(city) {
-        console.log("REACHED UPDATE");
-            $http.put('/city/updateCity/' + $scope.city._id, $scope.city).success(function(response) {
-            console.log(response);
-            refresh();
-        })
-    }
-
-
-
-
-
-
+        model.asmvFromDate = fromDate;
+        model.asmvToDate = toDate;
+        $scope.addData(model);
+    }   
 
 });

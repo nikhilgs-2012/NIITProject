@@ -1,7 +1,43 @@
-<div class="jumbotron text-center">
-    <h3>Book Movies</h3>
-
-    <p>{{ tagline }}</p>
-
-
+<div class="jumbotron">
+  <div class="row">
+   <div class="booking-image col-md-4">
+   <img class="movie-booking-poster" ng-src={{bookedMovie.moviPoster}} />
+   </div>
+   <div class="booking-container col-md-8">
+   		<div class="col-md-12">
+            <p class="movie-booking-props"><span class = "movie-headers">Title</span> : {{bookedMovie.moviTitle}}</p>
+            <p class="movie-booking-props"><span class = "movie-headers">Genre</span> : {{bookedMovie.moviGenre}}</p>
+            <p class="movie-booking-props"><span class = "movie-headers">Director</span> : {{bookedMovie.moviDirector}}</p>
+            <p class="movie-booking-props"><span class = "movie-headers">Actors</span> : {{bookedMovie.moviActors}}</p>
+            <p class="movie-booking-props"><span class = "movie-headers">Language</span> : {{bookedMovie.moviLanguage}}</p>
+        </div>
+        <div class="col-md-12">
+        	<table class="table list-theatres">
+            	<thead>
+                <tr>
+                    <th class="booking-header">Theatre</th>
+                    <th class="booking-header">Show Times</th>
+                    
+                </tr>
+            	</thead>
+            	<tbody>
+                <tr class="showtime-list" ng-repeat="theatre in theatreDetails">
+                   
+                    <td class="data-list"> 
+                    	<span>{{theatre.theatre}}</span>
+                    </td>
+					<td class="data-list">
+						
+						  <span ng-repeat = "shows in theatre.showTimings">
+						       <a class="showtime-link" ng-click="handleThisElement($event)" id="{{theatre.theatre + '-' + shows}}">
+						           {{ shows }}
+						       </a>
+					       </span>
+					 </td>
+                 </tr>
+                </tbody>
+			</table>
+        </div>
+    </div>
+  </div>
 </div>

@@ -12,24 +12,20 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			templateUrl: 'views/booking.html',
 			controller: 'BookingController'
 		})
+		.when('/confirm', {
+			templateUrl: 'views/confirm.html',
+			controller: 'ConfirmController'
+		})
 
 		.when('/movies', {
-			templateUrl: 'views/movies.html',
-			controller: 'MoviesController'	
-		})
+        templateUrl: 'views/movies.html',
+        controller: 'MoviesController'
+    	})
 
-		.when('/city', {
-			templateUrl: 'views/city.html',
-			controller: 'CityController'	
-		})
-		.when('/showTime', {
-			templateUrl: 'views/showtime.html',
-			controller: 'ShowtimeController'	
-		})
-		.when('/theater', {
-			templateUrl: 'views/theater.html',
-			controller: 'TheaterController'	
-		});
+		.when('/admin',{
+  			templateUrl:'views/admin.html',
+  			controller:'AdminController'
+  		});
 
 	$locationProvider.html5Mode(true);
 

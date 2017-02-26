@@ -1,82 +1,74 @@
+
 var express = require('express');
 var router = express.Router();
-bodyParser = require('body-parser'); //parses information from POST
+var bodyParser = require('body-parser'); //parses information from POST
+//router.use(bodyParser.urlencoded({ extended: true }));
+
 
 var mongoose = require('mongoose');
 
 
-var ShowTimeSchema = mongoose.Schema({
+// var dbHost = 'mongodb://localhost:27017/test';
+// mongoose.connect(dbHost);
+
+
+
+var stimSchema = mongoose.Schema({
+   
+    stimName: String
+ });
+var Stim = mongoose.model('Stim', stimSchema, 'stim');
+
+
+
+//Master
+  router.get('/getStim', function (req, res) {
+    console.log("REACHED stim GET FUNCTION ON SERVER");
+    Stim.find({}, function (err, docs) {
+         res.json(docs);         
+    });
+});
+
+  router.get('/getStim/:id', function (req, res) {
+    console.log("REACHED GET ID FUNCTION ON SERVER");
+    console.log(req.params.id);
+     Stim.find({_id: req.params.id}, function (err, docs) {
+         res.json(docs);
+         
+    });
+});
+
+router.post('/addStim', function(req, res){
+  console.log(req.body);
   
-  theaterName: String,
-  showtime : String
-
-});
-
-var ShowTime = mongoose.model('ShowTime', ShowTimeSchema, 'show');
-
-router.get('/getShowTime', function (req, res) {
-    console.log("REACHED GET showtime FUNCTION ON SERVER");
-    ShowTime.find({}, function (err, docs) {
-         res.json(docs);
-   });
-
-});
-
-router.get('/getShowTime/:id', function (req, res) {
-
-    console.log("REACHED GET showtime ID FUNCTION ON SERVER");
-     ShowTime.find({_id: req.params.id}, function (err, docs) {
-         res.json(docs);
-         console.log(docs);
-     });
-});
-
-router.post('/addShowTime', function(req, res){
- 
-  var theaterName = req.body.theaterName;
-  var showtime = req.body.showtime;
-
-  console.log(req.body.theaterName);
-  console.log(showtime);
-    
-  var show = new ShowTime({
-    
-    theaterName: theaterName,
-    showtime: showtime,
-           
+  var name = req.body.stimName;
+  var stim = new Stim({
+   
+    stimName:name   
   });
 
-  show.save(function(err, docs){
+  stim.save(function(err, docs){
     if ( err ) throw err;
-    console.log("Show Saved Successfully");
+    console.log("Book Saved Successfully");
     res.json(docs);
-    
   });
 
-})
+  })
 
-router.delete('/deleteShowTime/:id', function(req, res){
+router.delete('/deleteStim/:id', function(req, res){
    console.log("REACHED Delete FUNCTION ON SERVER");
-      ShowTime.remove({_id:req.params.id}, function(err, docs){
+   console.log(req.params.id);
+      Stim.remove({_id:req.params.id}, function(err, docs){
         res.json(docs);
     });
 })
 
-router.put('/updateShowTime/:id', function(req, res){
+router.put('/updateStim/:id', function(req, res){
     console.log("REACHED PUT");
     console.log(req.body);
-    ShowTime.findOneAndUpdate({_id:req.params.id}, req.body, function (err, data) {
-      console.log(data);
+    Stim.findOneAndUpdate({_id:req.params.id}, req.body, function (err, data) {
       res.json(data);
     });
 })
-
-// catch 404 and forward to error handler
-router.use(function(req, res, next) {
-  var err = new Error('Not Found'); 
-  err.status = 404;
-  next(err);
-});
-
 
 module.exports = router;

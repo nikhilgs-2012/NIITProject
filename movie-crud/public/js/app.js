@@ -1,1 +1,2 @@
-angular.module('sampleApp', ['ngRoute', 'appRoutes', 'MainCtrl', 'BookingCtrl','TheaterCtrl', 'CityCtrl','ShowCtrl','NerdService', 'MoviesCtrl', 'GeekService']);
+var movieApp = angular.module('movieApp', ['ngRoute', 'appRoutes','ngMaterial']);
+

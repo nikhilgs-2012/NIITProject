@@ -1,80 +1,42 @@
-angular.module('MoviesCtrl', []).controller('MoviesController', function($scope, $http) {
+movieApp.controller('MoviesController', function($scope,$rootScope,$location, $http, AdminCRUDService) {
 
-    $scope.tagline = 'Add your movies here!';
-
-    $scope.booking = 'booking';
-
-    var refresh = function() {
-        $http.get('/movie/getMovie').success(function(response) {
-            console.log('READ IS SUCCESSFUL');
-            $scope.moviList = response;
-            $scope.movi = "";
-        });
+   var dataRefresh = function () {
+             var promise =  AdminCRUDService.getData('movi');
+                            promise.then(function(data){
+                            $scope.movieList = data;
+              })
     };
 
-    refresh();
+    dataRefresh();
 
-    $scope.addMovie = function(movi) {
-        $http.get(`http://www.omdbapi.com/?t=${movi.moviTitle}&plot=short&r=json`).success(function(response) {
-            //console.log(response);
-            var movieObj = {};
-            for (var key in response) {
-                if (key == 'Title' || key == 'Language' || key == 'Poster' || key == 'Genre' || key == 'Director' || key == 'Actors') {
-                    movieObj[key] = response[key];
+    $scope.bookMovie = function(movie){
+    	$rootScope.bookedMovie = movie;
+    	$location.path('/booking');
+    }
 
-                }
+    $scope.filterMovies = function(){
+       $scope.movieList.length=0;
+       if($scope.genre == 'All'){
+        var promise =  AdminCRUDService.getData('movi');
+             promise.then(function(data){
+                 $scope.movieList = data;
+           })
+       }
+       else{
+            var promise =  AdminCRUDService.getData('movi');
+                            promise.then(function(movies){
+                                for(var movie of movies){
+                                    var genresSpaceRemoved = movie.moviGenre.replace(/ /g,'')
+                                    var genres = genresSpaceRemoved.split(',');
+                                    for(var genre of genres){
+                                        if(genre == $scope.genre){
+                                            $scope.movieList.push(movie);
+                                        }
+                                    }
+                                }
+                            });
             }
-           
-            //$http.defaults.headers.post["Content-Type"] = "application/json";
-
-            $http({
-                    method: 'POST',
-                    url: '/movie/addMovie',
-                    headers: {'Content-Type': 'application/json'},    
-                    data: movieObj
-                })
-                .then(function(response) {
-                    console.log(response);
-                    console.log("CREATE IS SUCCESSFUL");
-                    refresh();
-                });
-
-
-            // var serviceName = 'movi'
-            // $http.post('/movie/addMovie', movieObj).success(function(response) {
-            //     console.log(response);
-            //     console.log("CREATE IS SUCCESSFUL");
-            //     refresh();
-            // });
-
-        });
-        console.log($scope.moviTitle);
-
-    };
-
-    $scope.removeMovie = function(movie) {
-        //console.log(id);
-        $http.delete('/movie/deleteMovie/' + movie._id).success(function(response) {
-            console.log(response);
-            console.log('DELETED SUCCESSFULLY');
-            refresh();
-        });
-    };
-
-    $scope.editMovie = function(movie) {
-        console.log(movie);
-        $http.get('/movie/getMovie/' + movie._id).success(function(response) {
-            $scope.movi = response[0];
-        });
-    };
-
-    $scope.updateMovie = function() {
-        console.log("REACHED UPDATE");
-        console.log($scope.movi._id);
-        $http.put('/movie/updateMovie/' + $scope.movi._id, $scope.movi).success(function(response) {
-            console.log(response);
-            refresh();
-        })
+        
     }
 
 });

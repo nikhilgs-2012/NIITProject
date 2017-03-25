@@ -1,0 +1,225 @@
+<div class="jumbotron text-center">
+    <h3>Admin Section</h3>
+
+    <p>{{ tagline }}</p>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li  class="active"><a href="#movies" aria-controls="movies" role="tab" data-toggle="tab" onclick="return false">Movies</a></li>
+        <li><a href="#cities" data-target="#cities" aria-controls="cities" role="tab" data-toggle="tab" onclick="return false">Cities</a></li>
+        <li><a href="#theaters" aria-controls="theater" role="tab" data-toggle="tab" onclick="return false">Theaters</a></li>
+        <li><a href="#ShowTime" aria-controls="ShowTime" role="tab" data-toggle="tab" onclick="return false">ShowTime</a></li>
+        <li><a href="#AssignMovie" aria-controls="ShowTime" role="tab" data-toggle="tab" onclick="return false">Assign Movie</a></li>
+    </ul>
+
+    <div class="tab-pane1 active" id="movies">
+        <center>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Movie</th>
+                        <th>Actions</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td ><input ng-model="movi.moviTitle" /></td>
+                        <td><button ng-click="addMovie(movi)" class="btn btn-primary btn-sm"> Add </button> 
+                            <button ng-click="updateMovie(movi)" class="btn btn-primary btn-sm">Update</button></td>
+
+                    </tr>
+                    <tr ng-repeat=" movi in moviList">
+                        <td><img ng-src={{movi.moviPoster}} height="50px" width="50px"> {{movi.moviTitle}}</td>
+                        
+                        <td><button ng-click="editMovie(movi)" class="btn btn-primary btn-sm">Edit</button>
+                         <button ng-click="removeMovie(movi)" class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+    </div>
+
+    <div class="tab-pane2" id="cities">
+        <center>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>City Name</th>
+                        
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+
+                        <td width="70%"><input ng-model="city.cityName" /></td>
+
+                            <td><button ng-click="addCity(city)" class="btn btn-primary btn-sm">Add </button> 
+                            <button ng-click="updateCity(city)" class="btn btn-primary btn-sm">Update</button></td>
+
+                    </tr>
+                    <tr ng-repeat="city in cityList">
+                        <td>{{city.cityName}}</td>
+                       
+                        <td><button ng-click="editCity(city)" class="btn btn-primary btn-sm">Edit</button>
+                         <button ng-click="removeCity(city)" class="btn btn-danger btn-sm">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </center>
+    </div>
+
+    <div class="tab-pane3" id="theaters">
+
+        <table cellpadding="10" cellspacing="5" width="100%">
+                <thead style="border-bottom: 1px solid #ccc;">
+                <tr>
+                    <td><strong>Theater Name</strong></td>
+                    <td><strong>Ticket Price</strong></td>
+                    <td><strong>No of Seat</strong></td>
+                    <td><strong>City</strong></td>
+                    
+                    <td><strong>Actions</strong></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input ng-model="theater.theaterName" /></td>
+                    <td><input ng-model="theater.ticketPrice" /></td>
+                    <td><input ng-model="theater.seats" /></td>
+                    <td><!--input ng-model="theater.city" /-->
+                        <select ng-model="theater.cityName">
+                                <option ng-repeat="theater in cityList">{{theater.cityName}}</option>
+            
+                        </select>
+
+                    </td>
+                    
+                    <td>
+                        <button ng-click="addTheater(theater)" class="btn btn-primary btn-sm">Add</button>
+                        <button ng-click="updateTheater(theater)" class="btn btn-primary btn-sm">Update</button>
+                    </td>
+                </tr>
+                <tr ng-repeat="theater in theaterList" style="border-top:1px solid #ccc">
+                    <td>{{theater.theaterName}}</td>
+                    <td>{{theater.ticketPrice}}</td>
+                    <td>{{theater.seats}}</td>
+                    <td>{{theater.cityName}}</td>
+                    
+                    <td>
+                        <button ng-click="editTheater(theater)" class="btn btn-primary btn-sm">Edit</button>
+                        <button ng-click="removeTheater(theater)" class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+                </tbody>
+
+        </table>    
+
+    </div>
+
+    <div class="tab-pane4" id="ShowTime">
+            <center>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            
+                            <th>Show Time</th>
+                            <th>Actions</th>
+                       
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            
+                            <td><input ng-model="show.showtime" /></td>
+
+                            <td>
+                            <button ng-click="addShowTime(show)" class="btn btn-primary btn-sm">Add </button> 
+                            <button ng-click="updateShowTime(show)" class="btn btn-primary btn-sm">Update</button>
+                            </td>
+
+                        </tr>
+                        <tr ng-repeat="show in showtimeList">
+                            
+                            <td>{{show.showtime}}</td>
+                           
+                            <td><button ng-click="editShowTime(show)" class="btn btn-primary btn-sm">Edit</button>
+                             <button ng-click="removeShowTime(show)" class="btn btn-danger btn-sm">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </center>
+    </div>
+    <div class="tab-pane5" id="AssignMovie">
+            <center>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            
+                            <tr>
+                                <th>Select Movie</td>
+                                <td>Select City</td>
+                                <td>Select Theater</td>
+                                <td>Movie Start Date</td>
+                                <td>Movie End Date</td>
+                                <td>Action</td>
+                             
+                            </tr>
+                       
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <tr>
+                                <td>
+                                        <select ng-model="asmv.asmvMovie">
+                                            <option ng-model="asmv.asmvMovie" ng-repeat="movie in moviList" >{{movie.moviTitle}}</option>       
+                                        </select>
+                                  </td>
+                                 <td>
+                                        <select ng-model="asmv.asmvCity" ng-change="loadTheatres()">
+                                            <option ng-model="asmv.asmvCity" ng-repeat="city in cityList" >{{city.cityName}}</option>       
+                                        </select>
+                                  </td>
+
+                                   <td>
+                                        <select ng-model="asmv.asmvTheatre">
+                                            <option ng-model="asmv.asmvTheatre" ng-repeat="theatre in cityTheatres" >{{theatre.theaterName}}</option>                  
+                                        </select>
+                                  </td>
+
+                                  <td>
+                                        <input type="date"  ng-model="asmv.asmvFromDate" placeholder="dd-MM-yyyy" required />
+                                  </td>
+
+                                  <td>
+                                        <input type="date"  ng-model="asmv.asmvToDate"
+                                            placeholder="dd-MM-yyyy" required />
+                                  </td>
+
+                                <td><button ng-click="addAssignMovie(asmv)" class="btn btn-primary">Add </button></td>
+
+                                <td><button ng-click="updateAsmv(asmv)" class="btn btn-primary">Update</button></td>
+
+                            </tr>
+                            <tr ng-repeat="asmv in asmvList">
+                                <td>{{asmv.asmvMovie}}</td>
+                                <td>{{asmv.asmvCity}}</td>
+                                <td>{{asmv.asmvTheatre}}</td>
+                                <td>{{asmv.asmvFromDate}}</td>
+                                <td>{{asmv.asmvToDate}}</td>
+                                <td><button ng-click="removeAsmv(asmv)" class="btn btn-danger">Remove</button></td>
+                               <td><button ng-click="editAsmv(asmv)" class="btn btn-primary">Edit</button></td>
+                            </tr>
+                        </tbody>
+               </table>
+            </center>
+    </div>
+
+
+</div>    
+

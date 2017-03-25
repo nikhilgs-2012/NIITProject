@@ -1,9 +1,16 @@
 // modules =================================================
-var express        = require('express');
-var app            = express();
-var mongoose       = require('mongoose');
-var bodyParser     = require('body-parser');
-var methodOverride = require('method-override');
+var express        	= require('express');
+var app            	= express();
+var mongoose       	= require('mongoose');
+var bodyParser     	= require('body-parser');
+var methodOverride 	= require('method-override');
+var logger 			= require('morgan');
+var cookieParser 	= require('cookie-parser');
+var expressSession	= require('express-session');
+var hash 			= require('bcrypt-nodejs');
+var path 			= require('path');
+var passport 		= require('passport');
+var localStrategy	= require('passport-local' ).Strategy;
 
 
 var movies = require('./app/movie-crud');
@@ -14,6 +21,7 @@ var assignMovie = require('./app/assign-movie-crud');
 var assignShowTime = require('./app/assign-show-time-crud');
 var bookMovies = require('./app/book-movie-crud');
 var availableTicket= require ('./app/available-movie-ticket-crud');
+var User = require('./app/models/user.js');
 // configuration ===========================================
 	
 // config files
@@ -40,6 +48,52 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log("Connected to DB");
 });
+
+
+var routes = require('./app/auth.js');
+
+// define middleware
+
+app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, '/public')));
+
+// configure passport
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// routes
+app.use('/user', routes);
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '/', 'index.html'));
+});
+
+// error hndlers
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function(err, req, res) {
+  res.status(err.status || 500);
+  res.end(JSON.stringify({
+    message: err.message,
+    error: {}
+  }));
+});
+
+
+
 
 var port = process.env.PORT || 3000; // set our port
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users

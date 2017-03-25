@@ -2,9 +2,9 @@
 
 movieApp.controller('AdminController', function($scope, $http, $filter, AdminCRUDService) {
 
-    $scope.tagline = 'Book your movies here!';
+$scope.tagline = 'Book your movies here!';
 
-    var collections = ['city', 'thtr', 'stim', 'movi', 'asmv', 'asst'];
+var collections = ['city', 'thtr', 'stim', 'movi', 'asmv', 'asst'];
 
 var dataRefresh = function (collections) {
         collections.forEach(function(collection){
@@ -50,43 +50,9 @@ $scope.updateData = function(model){
         dataRefresh([serviceName]);
     })
 }
-
- $(document).ready(function() {
-    $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
-        e.preventDefault();
-        $(this).siblings('a.active').removeClass("active");
-        $(this).addClass("active");
-        var index = $(this).index();
-        $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
-        $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
-    });
-});
-
-
-
-// // Show timings
- $scope.example13model = [];
-        $scope.example13data = [
-            {id: 7, label: "David"},
-            {id: 2, label: "Jhon"},
-            {id: 3, label: "Lisa"},
-            {id: 4, label: "Nicole"},
-            {id: 5, label: "Danny"}];
-        
-        $scope.example13settings = {
-            smartButtonMaxItems: 2,
-            smartButtonTextConverter: function(itemText, originalItem) {
-                if (itemText === 'Jhon') {
-                return 'Jhonny!';
-                }
-        
-                return itemText;
-            }
-        };
-
-// movie insert
-$scope.insertMovie=function(movi){
-                $http.get(`http://www.omdbapi.com/?t=${movi.moviTitle}&plot=short&r=json`).success(function (response) {
+    // movie insert
+    $scope.insertMovie=function(movi){
+                        $http.get(`http://www.omdbapi.com/?t=${movi.moviTitle}&plot=short&r=json`).success(function (response) {
                             //console.log(response);
                             var movieObj={};
                             for(var key in response){
@@ -95,8 +61,8 @@ $scope.insertMovie=function(movi){
                                      
                                 }
                             }
-                           
-                           var serviceName = 'movi'  
+                      
+                            var serviceName = 'movi';  
                             var promise =  AdminCRUDService.addData(movieObj, serviceName);
                             promise.then(function(data){
                                 dataRefresh([serviceName]);

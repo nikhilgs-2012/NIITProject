@@ -1,18 +1,25 @@
-<h2>
-    Confirm your Tickets</h2>
-<div <div id="ticketbooking-container">
-    <button class=" button-color dates btn btn-primary" ng-click="noteDate($event)" id={{date}} ng-repeat="date in dates">{{date}}</button>
+<h2>Confirm your Tickets</h2>
+<div id="ticketbooking-container">
+    <button style="margin: 10px" class="button-color dates btn btn-default btn-sm" ng-click="noteDate($event)" id={{date}} ng-repeat="date in dates">{{date}} 
+    </button>
     <div class="confirm-container">
         <div ng-show="seatsAvailable" class="ng-hide" class="ticket-confirmation-container">
             <div class="row margin-5">
-                <p class="col-sm-6">Available Seats : <span class="total-seats">{{totalSeats}}</span></p>
-                <input class="col-sm-6 required-tickets" placeholder="Tickets" type="text" ng-model="requiredTickets" />
+                <p class="col-sm-6">Available Seats : <span class="total-seats">{{totalSeats}}</span>
+                </p>
+               
+            </div>
+            <div class="row margin-5">
+                 <input class="required-tickets" placeholder="Tickets" type="text" ng-model="requiredTickets" />
             </div>
             <div class="row">
-                <p class="col-sm-6">Total Amount : <span ng-show="showTotalAmount" class="ng-hide">{{requiredTickets * ticketPrice}}</span>
+                <p>Total Amount : <span ng-show="showTotalAmount" class="ng-hide">{{requiredTickets * ticketPrice}}</span>
                 </p>
-                <button ng-click="confirmTickets()" class=" confirm-booking button-color btn btn-primary col-sm-6">Book >>
-                    
+                
+            </div>
+            <div class="row">
+                <button ng-click="confirmTickets()" class="confirm-booking button-color btn btn-primary">
+                Book Ticket
                 </button>
             </div>
         </div>

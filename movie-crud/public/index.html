@@ -34,10 +34,15 @@
     <script src="js/controllers/AdminCtrl.js"></script>
     <script src="js/controllers/MovieCtrl.js"></script>
     <script src="js/controllers/confirmCtrl.js"></script>
+    <script src="js/controllers/registerCtrl.js"></script>
     <script src="js/services/admin-crud-service.js"></script>
+    <script src="js/services/authService.js"></script>
+     <script src="js/controllers/loginCtrl.js"></script>
+    <script src="js/controllers/logoutCtrl.js"></script>
     <script src="js/appRoutes.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
     
  
@@ -49,14 +54,22 @@
         <!-- HEADER -->
         <nav class="navbar navbar-inverse">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Home</a>
+                <a class="navbar-brand" href="/" style="color: #fff">MERA<span></span>MOVIES</a>
             </div>
             <ul class="nav navbar-nav">
+                <li><a href="/">Home</a>
                 <li><a href="/movies"> Movie</a></li>
                 <!--li><a href="/booking">Booking</a></li-->
-                <li><a href="/admin">Admin</a></li>
+                
                 
             </ul>
+            <ul class="nav navbar-nav pull-right">
+            <li><a href="/admin">Admin</a></li>
+                <li ng-controller="logoutController"><a href="/" ng-click='logout()'>Logout</a></li>
+                <li><a href="/register">Register</a>
+            </li>
+            </ul>
+
         </nav>
 
         <!-- ANGULAR DYNAMIC CONTENT -->

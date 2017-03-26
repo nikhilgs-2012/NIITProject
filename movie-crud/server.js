@@ -11,6 +11,7 @@ var hash 			= require('bcrypt-nodejs');
 var path 			= require('path');
 var passport 		= require('passport');
 var localStrategy	= require('passport-local' ).Strategy;
+var debug 			= require('debug')('passport-mongo');
 
 
 var movies = require('./app/movie-crud');
@@ -22,10 +23,12 @@ var assignShowTime = require('./app/assign-show-time-crud');
 var bookMovies = require('./app/book-movie-crud');
 var availableTicket= require ('./app/available-movie-ticket-crud');
 var User = require('./app/models/user.js');
+
 // configuration ===========================================
 	
 // config files
 //var db = require('./config/db');
+
 app.use(bodyParser.json({})); // parse application/json 
 app.use('/movi', movies);
 app.use('/thtr', theaters);
@@ -35,7 +38,6 @@ app.use('/asmv', assignMovie);
 app.use('/asst', assignShowTime);
 app.use('/avtc', availableTicket);
 app.use('/bktc', bookMovies);
-
 
 
 var mongo = require('mongodb');
@@ -50,20 +52,20 @@ db.once('open', function() {
 });
 
 
+/* middleware added */
+
 var routes = require('./app/auth.js');
 
-// define middleware
-
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('express-session')({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // configure passport
 passport.use(new localStrategy(User.authenticate()));
@@ -71,29 +73,10 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 // routes
-app.use('/user', routes);
-
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '/', 'index.html'));
-});
-
-// error hndlers
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-app.use(function(err, req, res) {
-  res.status(err.status || 500);
-  res.end(JSON.stringify({
-    message: err.message,
-    error: {}
-  }));
-});
+app.use('/user/', routes);
 
 
-
+/* middleware ended */
 
 var port = process.env.PORT || 3000; // set our port
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users

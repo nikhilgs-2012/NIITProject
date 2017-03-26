@@ -1,6 +1,6 @@
-<div class="col-md-4">
-  <h1>Login</h1>
-  <div ng-show="error" class="alert alert-danger">{{errorMessage}}</div>
+<div class="col-md-4" style="left:50%; margin-left: -175px;">
+  <h2>Login</h2>
+  
   <form class="form" ng-submit="login()">
     <div class="form-group">
       <label>Username</label>
@@ -14,4 +14,5 @@
         <button type="submit" class="btn btn-default" ng-disabled="disabled">Login</button>
       </div>
   </form>
+   <div ng-show="error" class="alert alert-danger" style="margin-top: 20px">{{errorMessage}}</div>
 </div>

@@ -48,7 +48,10 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 
 	$locationProvider.html5Mode(true);
 
-	movieApp.run(function ($rootScope, $location, $route, AuthService) {
+
+}]);
+
+movieApp.run(function ($rootScope, $location, $route, AuthService) {
 	  $rootScope.$on('$routeChangeStart',
 	    function (event, next, current) {
 	      AuthService.getUserStatus()
@@ -59,7 +62,4 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 	        }
 	      });
 	  });
-	});
-
-}]);
-
+});

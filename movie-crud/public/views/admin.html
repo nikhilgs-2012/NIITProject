@@ -4,27 +4,39 @@
       <md-tab label="Movies">
         <md-content class="md-padding">
           <h3 class="md-display-1">Movies</h3>
-            <table class="table">
+            <div>
+                <form>
+                    <div class="form-group">
+                      <label>Movie Name</label>
+                      <input class="form-control" ng-model="movi.moviTitle"  placeholder="Movie title" required>
+                    </div>
+                                      
+                    <button ng-click="insertMovie(movi)" class="btn btn-primary">Add Movies</button>
+                     <button ng-click="updateData(movi)" class="btn btn-primary">Update Movies</button>  
+                  </form>
+            </div>
+            <hr/>
+            <table class="table" style="max-height: 400px; overflow-y: auto;">
                   <thead>
                       <tr>
-                          <th>Movies</th>
+                          <th colspan="2">Movies Name</th>
+                          <th>Director</th>
+                          <th>Actors</th>
+                          <th>Gener</th>
                           <th colspan="2">Actions</th>
                           
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                          <td><input ng-model="movi.moviTitle" /></td>
-
-                          <td><button ng-click="insertMovie(movi)" class="btn btn-primary">Add </button></td>
-
-                          <td><button ng-click="updateData(movi)" class="btn btn-primary">Update</button></td>
-
-                      </tr>
+                     
                       <tr ng-repeat=" movi in moviList">
+                          <td><img ng-src={{movi.moviPoster}} height="50px" width="50px"></td>
                           <td>{{movi.moviTitle}}</td>
-                          <td><button ng-click="deleteData(movi)" class="btn btn-danger">Remove</button></td>
-                          <td><button ng-click="editData(movi)" class="btn btn-primary">Edit</button></td>
+                          <td>{{movi.moviDirector}}</td>
+                          <td>{{movi.moviActors}}</td>
+                          <td>{{movi.moviGenre}}</td>
+                          <td><button ng-click="deleteData(movi)" class="btn btn-danger btn-sm">Remove</button></td>
+                          <td><button ng-click="editData(movi)" class="btn btn-primary btn-sm">Edit</button></td>
                       </tr>
                   </tbody>
           </table>
@@ -33,26 +45,31 @@
       <md-tab label="Cities">
         <md-content class="md-padding">
           <h3 class="md-display-1">Cities</h3>
+            <div>
+                <form>
+                    <div class="form-group">
+                      <label>Add City</label>
+                      <input class="form-control" ng-model="city.cityName"   placeholder="Please enter city" required>
+                    </div>
+                                      
+                     <button ng-click="addData(city)"  class="btn btn-primary">Add Movies</button>
+                     <button ng-click="updateData(city)" class="btn btn-primary">Update Movies</button>  
+                  </form>
+            </div>
+            <hr/>
            <table class="table">
                           <thead>
                               <tr>
-                             
-                                  <th>City Name</th>
-                              
+                                  <th width="80%">City Name</th>
+                                  <th colspan="2">Action</th>
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
                               
-                                  <td><input ng-model="city.cityName" /></td>
-                                  <td><button ng-click="addData(city)" class="btn btn-primary">Add City</button></td>
-                                  <td><button ng-click="updateData(city)" class="btn btn-primary">Update</button></td>
-
-                              </tr>
                               <tr ng-repeat=" city in cityList">
                                   <td>{{city.cityName}}</td>
-                                  <td><button ng-click="deleteData(city)" class="btn btn-danger">Remove</button></td>
-                                  <td><button ng-click="editData(city)" class="btn btn-primary">Edit</button></td>
+                                  <td><button ng-click="deleteData(city)" class="btn btn-danger btn-sm">Remove</button></td>
+                                  <td><button ng-click="editData(city)" class="btn btn-primary btn-sm">Edit</button></td>
                               </tr>
                           </tbody>
            </table> 
@@ -61,6 +78,35 @@
       <md-tab label="Theater">
         <md-content class="md-padding">
           <h3 class="md-display-1">Theater</h3>
+          <div>
+                <form>
+                    <div class="form-group">
+                      <label>Theater Name</label>
+                      <input class="form-control" ng-model="thtr.thtrName" placeholder="add theater name" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Total Seats</label>
+                      <input class="form-control" input placeholder="Total Seats" ng-model="thtr.totalSeat" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Ticket Price</label>
+                      <input class="form-control" placeholder="Ticket Price"  ng-model="thtr.ticketPrice" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label>City</label>
+                      <select class="form-control" ng-model="thtr.city" >
+                             <option ng-repeat="city in cityList" ng-value="city.cityName">{{city.cityName}}</option>
+                           </select>
+                      </div>
+                                      
+                     <button ng-click="addData(thtr)"  class="btn btn-primary">Add Theaters</button>
+                     <button ng-click="updateData(thtr)" class="btn btn-primary">Update Theaters</button>  
+                  </form>
+            </div>
+            <hr/>
           <table cellpadding="10" cellspacing="5" width="100%">
                 <thead style="border-bottom: 1px solid #ccc;">
                 <tr>
@@ -74,27 +120,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                      <tr>
-                       
-                          <td><input placeholder="Theatre Name" ng-model="thtr.thtrName" /></td>
-                          <td><input placeholder="Total Seats" ng-model="thtr.totalSeat" /></td>
-                          <td><input placeholder="Ticket Price"  ng-model="thtr.ticketPrice" /></td>
-                          <td>
-                          <select ng-model="thtr.city" >
-                             <option ng-repeat="city in cityList" ng-value="city.cityName">{{city.cityName}}</option>
-                           </select>
-                           </td>
-                          <td><button ng-click="addData(thtr)" class="btn btn-primary">Add</button></td>
-                          <td><button ng-click="updateData(thtr)" class="btn btn-primary">Update</button></td>
-
-                      </tr>
+                  
                       <tr ng-repeat=" thtr in thtrList">
                           <td>{{thtr.thtrName}}</td>
                           <td>{{thtr.totalSeat}}</td>
                           <td>{{thtr.ticketPrice}}</td>
                           <td>{{thtr.city}}</td>
-                          <td><button ng-click="deleteData(thtr)" class="btn btn-danger">Remove</button></td>
-                          <td><button ng-click="editData(thtr)" class="btn btn-primary">Edit</button></td>
+                          <td><button ng-click="deleteData(thtr)" class="btn btn-danger btn-sm">Remove</button></td>
+                          <td><button ng-click="editData(thtr)" class="btn btn-primary btn-sm">Edit</button></td>
                       </tr>
                 </tbody>          
           </table>
@@ -103,28 +136,32 @@
       <md-tab label="Show Time">
         <md-content class="md-padding">
           <h3 class="md-display-1">Show Time</h3>
+           <div>
+                <form>
+                    <div class="form-group">
+                      <label>Show Time</label>
+                      <input class="form-control" ng-model="stim.stimName"  placeholder="Add Show Times" required>
+                    </div>
+                                      
+                     <button ng-click="addData(stim)"  class="btn btn-primary">Add Show Time</button>
+                     <button ng-click="updateData(stim)" class="btn btn-primary">Update Show Time</button>  
+                  </form>
+            </div>
+            <hr/> 
            <table class="table">
                   <thead>
                       <tr>
-                          <th>Timing ID</th>
+                          <th width="80%">Show Times</th>
                           <th colspan="2">Actions</th>
                           
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                               
-                          <td><input ng-model="stim.stimName" /></td>
-
-                          <td><button ng-click="addData(stim)" class="btn btn-primary">Add </button></td>
-
-                          <td><button ng-click="updateData(stim)" class="btn btn-primary">Update</button></td>
-
-                      </tr>
+                   
                       <tr ng-repeat=" stim in stimList">
                           <td>{{stim.stimName}}</td>
-                          <td><button ng-click="deleteData(stim)" class="btn btn-danger">Remove</button></td>
-                          <td><button ng-click="editData(stim)" class="btn btn-primary">Edit</button></td>
+                          <td><button ng-click="deleteData(stim)" class="btn btn-danger btn-sm">Remove</button></td>
+                          <td><button ng-click="editData(stim)" class="btn btn-primary btn-sm">Edit</button></td>
                       </tr>
                   </tbody>
            </table>
@@ -133,6 +170,41 @@
       <md-tab label="Assign Movies">
           <md-content class="md-padding">
               <h3 class="md-display-1">Assign Movies</h3>
+                <div>
+                  <form>
+                      <div class="form-group">
+                          <label>Select Movie</label>
+                          <select class="form-control" ng-model="asmv.asmvMovie">
+                                  <option ng-model="asmv.asmvMovie" ng-repeat="movie in moviList" >{{movie.moviTitle}}</option>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label>Select City</label>
+                          <select class="form-control" ng-model="asmv.asmvCity" ng-change="loadTheatres()">
+                            <option ng-model="asmv.asmvCity" ng-repeat="city in cityList" >{{city.cityName}}</option>   
+                          </select>
+                     
+                      </div>
+                      <div class="form-group">
+                          <label>Select Theater</label>
+                          <select class="form-control" ng-model="asmv.asmvTheatre">
+                            <option ng-model="asmv.asmvTheatre" ng-repeat="theatre in cityTheatres" >{{theatre.thtrName}}</option>          
+                          </select>
+                      </div>
+                      <div class="form-group">
+                         <label>Movie Start Date</label>
+                         <input type="date" class="form-control" ng-model="asmv.asmvFromDate" placeholder="yyyy-MM-dd" required />
+                      </div>
+                       <div class="form-group">
+                         <label>Movie End Date</label>
+                          <input type="date" class="form-control" ng-model="asmv.asmvToDate" placeholder="yyyy-MM-dd" required />
+                      </div>
+                                     
+                      <button ng-click="addAssignMovie(asmv)" class="btn btn-primary">Assign Movie</button>
+                      <button ng-click="updateData(stim)" class="btn btn-primary">Update Assign Date</button>  
+                  </form>
+                </div>
+                <hr/> 
                 <table class="table">
                     <thead>
                        <tr>
@@ -146,42 +218,15 @@
                        </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                          <td>
-                            <select ng-model="asmv.asmvMovie">
-                              <option ng-model="asmv.asmvMovie" ng-repeat="movie in moviList" >{{movie.moviTitle}}</option>
-                            </select>
-                         </td>
-                         <td>
-                            <select ng-model="asmv.asmvCity" ng-change="loadTheatres()">
-                              <option ng-model="asmv.asmvCity" ng-repeat="city in cityList" >{{city.cityName}}</option>   
-                            </select>
-                          </td>
-                          <td>
-                            <select ng-model="asmv.asmvTheatre">
-                              <option ng-model="asmv.asmvTheatre" ng-repeat="theatre in cityTheatres" >{{theatre.thtrName}}</option>          
-                            </select>
-                          </td>
-                          <td>
-                              <input type="date"  ng-model="asmv.asmvFromDate" placeholder="yyyy-MM-dd" required />
-                          </td>
-                          <td>
-                                <input type="date"  ng-model="asmv.asmvToDate" placeholder="yyyy-MM-dd" required />
-                          </td>
-
-                          <td><button ng-click="addAssignMovie(asmv)" class="btn btn-primary">Add </button></td>
-
-                          <td><button ng-click="updateData(asmv)" class="btn btn-primary">Update</button></td>
-
-                      </tr>
+                      
                       <tr ng-repeat=" asmv in asmvList">
                           <td>{{asmv.asmvMovie}}</td>
                           <td>{{asmv.asmvCity}}</td>
                           <td>{{asmv.asmvTheatre}}</td>
                           <td>{{asmv.asmvFromDate}}</td>
                           <td>{{asmv.asmvToDate}}</td>
-                          <td><button ng-click="deleteData(asmv)" class="btn btn-danger">Remove</button></td>
-                          <td><button ng-click="editData(asmv)" class="btn btn-primary">Edit</button></td>
+                          <td><button ng-click="deleteData(asmv)" class="btn btn-danger btn-sm">Remove</button></td>
+                          <td><button ng-click="editData(asmv)" class="btn btn-primary btn-sm">Edit</button></td>
                       </tr>
                   </tbody>
                </table>
@@ -190,33 +235,36 @@
       <md-tab label="Assign Showtime">
           <md-content class="md-padding">
             <h3 class="md-display-1">Assign Showtime</h3>
+                <div>
+                <form>
+                    <div class="form-group">
+                        <label>Theater Name</label>
+                        <select ng-model="asst.asstTheatre" class="form-control">
+                              <option ng-model="asst.asstTheatre" ng-repeat="thtr in thtrList" >{{thtr.thtrName}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Theater Name</label>
+                        <select ng-model="asst.asstTime" class="form-control">
+                                <option ng-model="asst.asstTime" ng-repeat="stim in stimList" >{{stim.stimName}}</option>
+                        </select>
+                    </div>
+                                      
+                    <button ng-click="addData(asst)" class="btn btn-primary">Assign Show Times</button>
+                    <button ng-click="updateData(asst)" class="btn btn-primary">Update Show Time</button> 
+                  </form>
+                </div>
+                <hr/>
                 <table class="table">
                   <thead>
                       <tr>
-                      
                           <th>Theater Name</th>
                           <th>Show Time</th>
-                          
+                          <th width="20%">Action</th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                         <td>
-                            <select ng-model="asst.asstTheatre">
-                              <option ng-model="asst.asstTheatre" ng-repeat="thtr in thtrList" >{{thtr.thtrName}}</option>
-                            </select>
-                          </td>
-                          <td>
-                              <select ng-model="asst.asstTime">
-                                <option ng-model="asst.asstTime" ng-repeat="stim in stimList" >{{stim.stimName}}</option>
-                              </select>
-                          </td>
-
-                          <td><button ng-click="addData(asst)" class="btn btn-primary">Add </button></td>
-
-                          <td><button ng-click="updateData(asst)" class="btn btn-primary">Update</button></td>
-
-                      </tr>
+                     
                       <tr ng-repeat=" asst in asstList">
                           <td>{{asst.asstTheatre}}</td>
                            <td>{{asst.asstTime}}</td>
@@ -226,7 +274,7 @@
                   </tbody>
                 </table>
 
-          </md-content>
+              </md-content>
       </md-tab>
     </md-tabs>
   </md-content>

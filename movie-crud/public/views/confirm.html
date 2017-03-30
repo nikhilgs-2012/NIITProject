@@ -1,29 +1,52 @@
-<h2>Confirm your Tickets</h2>
 <div id="ticketbooking-container">
-    <button style="margin: 10px" class="button-color dates btn btn-default btn-sm" ng-click="noteDate($event)" id={{date}} ng-repeat="date in dates">{{date}} 
-    </button>
-    <div class="confirm-container">
-        <div ng-show="seatsAvailable" class="ng-hide" class="ticket-confirmation-container">
-            <div class="row margin-5">
-                <p class="col-sm-6">Available Seats : <span class="total-seats">{{totalSeats}}</span>
-                </p>
+    <div class="col-md-12">
+        <h2 style="padding: 10px">Confirm your Tickets</h2>
+    </div>
+    <div class="col-md-12">
+        <button style="margin: 10px" class="button-color dates btn btn-default btn-sm" ng-click="noteDate($event)" id={{date}} ng-repeat="date in dates">{{date}} 
+        </button>
+    </div>
+    
+    <div class="col-md-12 row">
+        <div ng-show="seatsAvailable" class="ng-hide col-m-12" >
+            <div class="row" style="padding: 20px">
+                <div class="col-md-12">
+                    <div  class="col-md-3">Available Seats :</div> 
+                    <div class="col-md-9"><span class="total-seats">{{totalSeats}}</span></div>
                
+                </div>
             </div>
-            <div class="row margin-5">
-                 <input class="required-tickets" placeholder="Tickets" type="text" ng-model="requiredTickets" />
+            <div class="row" style="padding:10px 20px">
+                <div class="col-md-12">
+                  <div class="col-md-3">  
+                        <label>No of Tickets</label>
+                 </div>
+                 <div class="col-md-9">
+                    <input class="required-tickets form-control" placeholder="Tickets" type="text" ng-model="requiredTickets" />
+                 </div>
+                 </div>
             </div>
-            <div class="row">
-                <p>Total Amount : <span ng-show="showTotalAmount" class="ng-hide">{{requiredTickets * ticketPrice}}</span>
-                </p>
+            <div class="row" style="padding:10px 20px">
+                <div class="col-md-12">
+                    <div class="col-md-3">
+                        Total Amount :
+                    </div>
+                    <div class="col-md-9"><span ng-show="showTotalAmount" class="ng-hide">{{requiredTickets * ticketPrice}}</span>
+                    </div>
                 
+                </div>
             </div>
-            <div class="row">
+            <div class="row" style="padding:10px 20px">
+                <div class="col-md-12">
+                <div class="col-md-6">
                 <button ng-click="confirmTickets()" class="confirm-booking button-color btn btn-primary">
                 Book Ticket
                 </button>
+                </div>
+                </div>
             </div>
         </div>
-        <div class="warnings">
+        <div class="warnings col-md-12" style="padding: 20px">
             <p ng-show="lessSeats" class="ng-hide">Select Available Tickets</p>
             <p ng-show="houseFull" class="ng-hide">House Full</p>
             <p ng-show="bookedSuccessfully" class="ng-hide">Your Ticket has been booked Successfully your Booking Id is<b>{{bookedId}}</p>

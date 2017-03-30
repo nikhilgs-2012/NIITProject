@@ -1,6 +1,31 @@
 body { padding-top:30px; }
 
+body, html {
+  height: 100%;
+}
+
+.container {height: 100% ; height: auto; overflow: inherit;}
+.container .jumbotron {padding: 20px 45px;}
+.movie-title {font-size: 14px;}
+.movie-booking-poster {width: 100%}
+.booking-container {padding-top: 15px}
+.movie-headers {font-weight: bold;}
+
 table tr td{ padding: 6px !important}
+.nomargin{margin: 0}
+.nopadding {padding: 0}
+.container {padding: 0;}
+
+.h3, h3 {font-size: 20px} 
+.h2, h2 {font-size: 22px} 
+
+.navbar {border-radius: 0; margin-bottom: 0}
+
+
+
 
 .jumbotron p {font-size: 13px !important}
 .jumbotron p.title {font-size: 16px !important}
+
+.meramovie-logo {padding: 5px 15px !important;}
+.ticketbooking-container > .col-md-12 {padding: 15px;}

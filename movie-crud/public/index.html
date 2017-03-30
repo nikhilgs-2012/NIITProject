@@ -48,13 +48,13 @@
  
 </head>
 
-<body ng-app="movieApp">
-    <div class="container">
+<body ng-app="movieApp" >
+    <div class="container" md-whiteframe="3">
 
         <!-- HEADER -->
         <nav class="navbar navbar-inverse">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/" style="color: #fff">MERA<span></span>MOVIES</a>
+                <a class="navbar-brand meramovie-logo" href="/" style="color: #fff"><img ng-src="resources/meramovie-logo.gif"></a>
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a>
@@ -74,8 +74,9 @@
 
         <!-- ANGULAR DYNAMIC CONTENT -->
         <div ng-view></div>
+        <div class="clearfix"></div>
 
     </div>
-</body>
+</body> 
 
 </html>

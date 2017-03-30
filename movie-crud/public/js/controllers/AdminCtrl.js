@@ -8,12 +8,12 @@ var collections = ['city', 'thtr', 'stim', 'movi', 'asmv', 'asst'];
 
 var dataRefresh = function (collections) {
         collections.forEach(function(collection){
-                                var promise =  AdminCRUDService.getData(collection);
-                                    promise.then(function(data){
-                                        $scope[`${collection}List`] = data;
-                                        $scope[collection] = "";
-                                    })
-                             });
+            var promise =  AdminCRUDService.getData(collection);
+                promise.then(function(data){
+                    $scope[`${collection}List`] = data;
+                    $scope[collection] = "";
+                })
+         });
     };
 
 dataRefresh(collections);
@@ -52,22 +52,22 @@ $scope.updateData = function(model){
 }
     // movie insert
     $scope.insertMovie=function(movi){
-                        $http.get(`http://www.omdbapi.com/?t=${movi.moviTitle}&plot=short&r=json`).success(function (response) {
-                            //console.log(response);
-                            var movieObj={};
-                            for(var key in response){
-                                if(key=='Title' || key== 'Language' || key== 'Poster' || key== 'Genre' || key== 'Director' || key== 'Actors'){
-                                    movieObj[key] = response[key];
-                                     
-                                }
-                            }
-                      
-                            var serviceName = 'movi';  
-                            var promise =  AdminCRUDService.addData(movieObj, serviceName);
-                            promise.then(function(data){
-                                dataRefresh([serviceName]);
-                            })
-                        });
+        $http.get(`http://www.omdbapi.com/?t=${movi.moviTitle}&plot=short&r=json`).success(function (response) {
+            //console.log(response);
+            var movieObj={};
+            for(var key in response){
+                if(key=='Title' || key== 'Language' || key== 'Poster' || key== 'Genre' || key== 'Director' || key== 'Actors' || key=='Year'){
+                    movieObj[key] = response[key];
+                     
+                }
+            }
+      
+            var serviceName = 'movi';  
+            var promise =  AdminCRUDService.addData(movieObj, serviceName);
+            promise.then(function(data){
+                dataRefresh([serviceName]);
+            })
+        });
 
 }
 
@@ -85,9 +85,7 @@ $scope.updateData = function(model){
 
  //constructAssignMovieModel
     $scope.addAssignMovie = function(model){
-       // var fromDate =  $filter('date')(model.asmvFromDate, 'shortDate');
-       // var toDate = $filter('date')(model.asmvToDate, 'shortDate');
-
+     
        var fromDate = moment(model.asmvFromDate).format('l');
        var toDate = moment(model.asmvToDate).format('l');
 
